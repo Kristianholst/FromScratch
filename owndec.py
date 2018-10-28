@@ -120,8 +120,8 @@ def gini(rows):
 #testcase
 rows=np.array([['red',1,'Apple'],['green',3,'Grape']])
 rows2=np.array([['red',1,'Apple'],['green',3,'Grape'],['green',3,'Grape'],['green',3,'Grape']])
-gini=gini(rows2)
-print(gini)
+
+
 
 #test for infogain formula
 def info_gain(left, right, current_uncertainty):
@@ -134,5 +134,6 @@ def info_gain(left, right, current_uncertainty):
 
 #test
 true_rows, false_rows = partition(training_data, Question(0,'Red'))
-testinfogain=info_gain(true_rows,false_rows,0.5)
-    
+#testinfogain=info_gain(true_rows,false_rows,0.5)
+
+
