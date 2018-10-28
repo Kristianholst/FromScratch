@@ -119,8 +119,20 @@ def gini(rows):
 
 #testcase
 rows=np.array([['red',1,'Apple'],['green',3,'Grape']])
-
-gini=gini(rows)
+rows2=np.array([['red',1,'Apple'],['green',3,'Grape'],['green',3,'Grape'],['green',3,'Grape']])
+gini=gini(rows2)
 print(gini)
-        
+
+#test for infogain formula
+def info_gain(left, right, current_uncertainty):
+    """Information Gain.
+    The uncertainty of the starting node, minus the weighted impurity of
+    two child nodes.
+    """
+    p = float(len(left)) / (len(left) + len(right))
+    return current_uncertainty - p * gini(left) - (1 - p) * gini(right)
+
+#test
+true_rows, false_rows = partition(training_data, Question(0,'Red'))
+testinfogain=info_gain(true_rows,false_rows,0.5)
     
