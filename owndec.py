@@ -21,7 +21,7 @@ training_data=np.array(training_data)
 #first must create all help functions
 #We also need the headers
 
-headers=['color','diam','Cat']
+header=['color','diam','Cat']
 
 #first muust try to get distinct rows per coloum, own mod using numpy array
 def unique_vals(rows,col):
@@ -34,6 +34,7 @@ def unique_vals(rows,col):
 
 
 def countclass(rows):
+    from collections import Counter
     return Counter(rows[:,2])
 
 
@@ -51,8 +52,8 @@ class Question:
     question. See the demo below.
     """
 
-    def __init__(self, coloumn,value):
-        self.coloumn=coloumn
+    def __init__(self, column,value):
+        self.column=column
         self.value=value
 
     def match(self, example):
@@ -72,6 +73,9 @@ class Question:
             condition = ">="
         return "Is %s %s %s?" % (
             header[self.column], condition, str(self.value))
+
+
+
 Question(1, 3)
 # How about one for a categorical attribute
 q = Question(0, 'Green')
@@ -82,3 +86,41 @@ example = training_data[0]
 # ... and see if it matches the question
 q.match(example)
 #######
+
+def partition(rows, question):
+    """Partitions a dataset.
+    For each row in the dataset, check if it matches the question. If
+    so, add it to 'true rows', otherwise, add it to 'false rows'.
+    """
+
+    true_rows,false_rows=np.empty([3,]),np.empty([3,])
+
+    #
+
+
+    for row in rows:
+        if question.match(row):
+           true_rows= np.vstack((true_rows,row))
+        else:
+           false_rows= np.vstack((false_rows,row))
+
+    return true_rows[1:],false_rows[1:]
+
+#calculate gini of split
+
+def gini(rows):
+    counts=countclass(rows)
+    impurity=1
+    for cat in counts:
+        p=counts[cat]/float(len(rows))
+        impurity -= p**2
+    return impurity
+
+
+#testcase
+rows=np.array([['red',1,'Apple'],['green',3,'Grape']])
+
+gini=gini(rows)
+print(gini)
+        
+    
