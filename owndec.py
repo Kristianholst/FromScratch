@@ -134,6 +134,6 @@ def info_gain(left, right, current_uncertainty):
 
 #test
 true_rows, false_rows = partition(training_data, Question(0,'Red'))
-#testinfogain=info_gain(true_rows,false_rows,0.5)
+testinfogain=info_gain(true_rows,false_rows,gini(training_data))
 
-
+print(testinfogain)
